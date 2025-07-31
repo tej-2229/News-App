@@ -7,16 +7,15 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
-  cached_network_image: ^3.4.1
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.6.1
-  go_router: ^16.0.0
-  http: ^1.4.0
-  intl: ^0.20.2
-  path: ^1.9.1
-  sqflite: ^2.4.2
-  url_launcher: ^6.3.2
+  flutter_riverpod: ^2.6.1 # state management
+  go_router: ^16.0.0 # for navigation
+  cached_network_image: ^3.4.1 # for image caching
+  http: ^1.4.0 # for api calls
+  path: ^1.9.1 # for path
+  sqflite: ^2.4.2 # for local storage
+  url_launcher: ^6.3.2 # for opening url in browser
 
 dev_dependencies:
   flutter_test:
