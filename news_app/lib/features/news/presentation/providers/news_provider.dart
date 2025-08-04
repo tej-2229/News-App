@@ -6,36 +6,18 @@ import 'package:news_app/features/news/data/datasources/remote/news_remote_data_
 import 'package:news_app/features/news/data/repositories/news_repository_impl.dart';
 import 'package:news_app/features/news/domain/repositories/news_repository.dart';
 import 'package:news_app/features/news/domain/usecases/get_news.dart';
-import 'package:news_app/features/news/domain/usecases/get_saved_news.dart';
-import 'package:news_app/features/news/domain/usecases/remove_news.dart';
-import 'package:news_app/features/news/domain/usecases/save_news.dart';
 import 'package:news_app/features/news/presentation/providers/news_notifier.dart';
 import 'package:news_app/features/news/presentation/providers/news_state.dart';
 
 final newsProvider = StateNotifierProvider<NewsNotifier, NewsState>((ref) {
   return NewsNotifier(
     getNews: ref.read(getNewsProvider),
-    getSavedNews: ref.read(getSavedNewsProvider),
-    saveNews: ref.read(saveNewsProvider),
-    removeNews: ref.read(removeNewsProvider),
   );
 });
 
 // Providers for use cases
 final getNewsProvider = Provider<GetNews>((ref) {
   return GetNews(ref.read(newsRepositoryProvider));
-});
-
-final getSavedNewsProvider = Provider<GetSavedNews>((ref) {
-  return GetSavedNews(ref.read(newsRepositoryProvider));
-});
-
-final saveNewsProvider = Provider<SaveNews>((ref) {
-  return SaveNews(ref.read(newsRepositoryProvider));
-});
-
-final removeNewsProvider = Provider<RemoveNews>((ref) {
-  return RemoveNews(ref.read(newsRepositoryProvider));
 });
 
 // Repository provider

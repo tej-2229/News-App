@@ -44,16 +44,32 @@ class AppDatabase {
   }
 
   Future<List<NewsModel>> getNews() async {
-    final db = await instance.database;
-    final result = await db.query('news');
-    return result.map((json) => NewsModel.fromJson(json)).toList();
-  }
+  final db = await instance.database;
+  final result = await db.query('news');
+  return result.map((json) => NewsModel.fromDbMap(json)).toList();
+}
 
-  Future<int> insertNews(NewsModel news) async {
-    final db = await instance.database;
-    return await db.insert('news', news.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-  }
+Future<int> insertNews(NewsModel news) async {
+  final db = await instance.database;
+  return await db.insert(
+    'news', 
+    news.toJson(),
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+}
+
+
+  // Future<List<NewsModel>> getNews() async {
+  //   final db = await instance.database;
+  //   final result = await db.query('news');
+  //   return result.map((json) => NewsModel.fromJson(json)).toList();
+  // }
+
+  // Future<int> insertNews(NewsModel news) async {
+  //   final db = await instance.database;
+  //   return await db.insert('news', news.toJson(),
+  //       conflictAlgorithm: ConflictAlgorithm.replace);
+  // }
 
   Future<int> deleteNews(String articleId) async {
     final db = await instance.database;

@@ -4,20 +4,16 @@ import 'package:news_app/features/news/presentation/widgets/article_item.dart';
 
 class NewsList extends StatelessWidget {
   final List<News> news;
-  final List<News> savedNews;
   final bool isLoading;
   final ScrollController scrollController;
   final Function(News) onTap;
-  final Function(News) onSave;
 
   const NewsList({
     super.key,
     required this.news,
-    required this.savedNews,
     required this.isLoading,
     required this.scrollController,
     required this.onTap,
-    required this.onSave,
   });
 
   @override
@@ -36,13 +32,10 @@ class NewsList extends StatelessWidget {
         }
 
         final article = news[index];
-        final isSaved = savedNews.any((n) => n.articleId == article.articleId);
 
         return ArticleItem(
           news: article,
-          isSaved: isSaved,
           onTap: () => onTap(article),
-          onSave: () => onSave(article),
         );
       },
     );

@@ -4,16 +4,12 @@ import 'package:news_app/features/news/domain/entities/news_entity.dart';
 
 class ArticleItem extends StatelessWidget {
   final News news;
-  final bool isSaved;
   final VoidCallback onTap;
-  final VoidCallback onSave;
 
   const ArticleItem({
     super.key,
     required this.news,
-    required this.isSaved,
     required this.onTap,
-    required this.onSave,
   });
 
   @override

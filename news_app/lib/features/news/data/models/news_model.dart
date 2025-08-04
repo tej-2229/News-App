@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:news_app/features/news/domain/entities/news_entity.dart';
 
 class NewsModel extends News {
@@ -19,9 +21,7 @@ class NewsModel extends News {
       articleId: json['article_id'] ?? '',
       title: json['title'] ?? '',
       link: json['link'] ?? '',
-      creator: json['creator'] != null
-          ? List<String>.from(json['creator'])
-          : null,
+      creator: json['creator'] != null ? _parseCreator(json['creator']) : null,
       description: json['description'],
       content: json['content'],
       pubDate: json['pubDate'] ?? '',
@@ -31,12 +31,21 @@ class NewsModel extends News {
     );
   }
 
+  static List<String>? _parseCreator(dynamic creator) {
+    if (creator is List) {
+      return creator.map((e) => e.toString()).toList();
+    }
+    return null;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'article_id': articleId,
       'title': title,
       'link': link,
-      'creator': creator,
+      'creator': creator != null
+          ? jsonEncode(creator)
+          : null, // Convert list to JSON string
       'description': description,
       'content': content,
       'pubDate': pubDate,
@@ -44,6 +53,23 @@ class NewsModel extends News {
       'source_id': sourceId,
       'source_name': sourceName,
     };
+  }
+
+  factory NewsModel.fromDbMap(Map<String, dynamic> map) {
+    return NewsModel(
+      articleId: map['article_id'] ?? '',
+      title: map['title'] ?? '',
+      link: map['link'] ?? '',
+      creator: map['creator'] != null
+          ? List<String>.from(jsonDecode(map['creator']))
+          : null,
+      description: map['description'],
+      content: map['content'],
+      pubDate: map['pubDate'] ?? '',
+      imageUrl: map['image_url'],
+      sourceId: map['source_id'] ?? '',
+      sourceName: map['source_name'] ?? '',
+    );
   }
 
   factory NewsModel.fromEntity(News news) {
@@ -61,5 +87,3 @@ class NewsModel extends News {
     );
   }
 }
-
-

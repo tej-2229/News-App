@@ -17,26 +17,18 @@ class NewsRepositoryImpl implements NewsRepository {
   Future<List<News>> getNews({int page = 1}) async {
     try {
       final news = await remoteDataSource.getNews(page: page);
+      await _cacheNews(news);
       return news;
     } catch (e) {
-      final savedNews = await localDataSource.getSavedNews();
-      return savedNews;
+      final cachedNews = await localDataSource.getSavedNews();
+      return cachedNews.map((model) => model.toEntity()).toList();
     }
   }
 
-  @override
-  Future<List<News>> getSavedNews() async {
-    return await localDataSource.getSavedNews();
-  }
-
-  @override
-  Future<void> saveNews(News news) async {
-    await localDataSource.saveNews(NewsModel.fromEntity(news));
-  }
-
-  @override
-  Future<void> removeNews(String articleId) async {
-    await localDataSource.removeNews(articleId);
+  Future<void> _cacheNews(List<News> news) async {
+    for (final item in news) {
+      await localDataSource.saveNews(NewsModel.fromEntity(item));
+    }
   }
 }
 

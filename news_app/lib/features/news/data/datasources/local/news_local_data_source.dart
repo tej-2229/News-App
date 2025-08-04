@@ -4,7 +4,6 @@ import 'package:news_app/features/news/data/models/news_model.dart';
 abstract class NewsLocalDataSource {
   Future<List<NewsModel>> getSavedNews();
   Future<void> saveNews(NewsModel news);
-  Future<void> removeNews(String articleId);
 }
 
 class NewsLocalDataSourceImpl implements NewsLocalDataSource {
@@ -20,10 +19,5 @@ class NewsLocalDataSourceImpl implements NewsLocalDataSource {
   @override
   Future<void> saveNews(NewsModel news) async {
     await database.insertNews(news);
-  }
-
-  @override
-  Future<void> removeNews(String articleId) async {
-    await database.deleteNews(articleId);
   }
 }

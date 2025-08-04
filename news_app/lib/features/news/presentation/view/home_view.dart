@@ -23,7 +23,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
     _scrollController.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(newsProvider.notifier).fetchNews();
-      ref.read(newsProvider.notifier).loadSavedNews();
     });
   }
 
@@ -96,14 +95,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
               child: NewsList(
                 scrollController: _scrollController,
                 news: filteredNews,
-                savedNews: state.savedNews,
                 isLoading: state.isLoading,
                 onTap: (news) {
                   context.push('/article/${news.articleId}', extra: news);
                 },
-                onSave: (news) {
-                  notifier.toggleSaveNews(news);
-                },
+               
               ),
             ),
           ),

@@ -39,4 +39,19 @@ class News {
       sourceName: sourceName,
     );
   }
+
+  News toEntity() {
+    return News(
+      articleId: articleId,
+      title: title,
+      link: link,
+      creator: creator,
+      description: description,
+      content: content,
+      pubDate: pubDate,
+      imageUrl: imageUrl,
+      sourceId: sourceId,
+      sourceName: sourceName,
+    );
+  }
 }
