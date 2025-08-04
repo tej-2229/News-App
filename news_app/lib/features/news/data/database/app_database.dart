@@ -19,11 +19,7 @@ class AppDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDB,
-    );
+    return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -44,32 +40,19 @@ class AppDatabase {
   }
 
   Future<List<NewsModel>> getNews() async {
-  final db = await instance.database;
-  final result = await db.query('news');
-  return result.map((json) => NewsModel.fromDbMap(json)).toList();
-}
+    final db = await instance.database;
+    final result = await db.query('news');
+    return result.map((json) => NewsModel.fromDbMap(json)).toList();
+  }
 
-Future<int> insertNews(NewsModel news) async {
-  final db = await instance.database;
-  return await db.insert(
-    'news', 
-    news.toJson(),
-    conflictAlgorithm: ConflictAlgorithm.replace,
-  );
-}
-
-
-  // Future<List<NewsModel>> getNews() async {
-  //   final db = await instance.database;
-  //   final result = await db.query('news');
-  //   return result.map((json) => NewsModel.fromJson(json)).toList();
-  // }
-
-  // Future<int> insertNews(NewsModel news) async {
-  //   final db = await instance.database;
-  //   return await db.insert('news', news.toJson(),
-  //       conflictAlgorithm: ConflictAlgorithm.replace);
-  // }
+  Future<int> insertNews(NewsModel news) async {
+    final db = await instance.database;
+    return await db.insert(
+      'news',
+      news.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 
   Future<int> deleteNews(String articleId) async {
     final db = await instance.database;
@@ -85,5 +68,3 @@ Future<int> insertNews(NewsModel news) async {
     db.close();
   }
 }
-
-

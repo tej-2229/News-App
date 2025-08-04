@@ -45,7 +45,7 @@ class NewsModel extends News {
       'link': link,
       'creator': creator != null
           ? jsonEncode(creator)
-          : null, // Convert list to JSON string
+          : null, 
       'description': description,
       'content': content,
       'pubDate': pubDate,
